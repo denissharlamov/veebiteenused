@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/book" targetNamespace="http://www.ttu.ee/idu0075/2015/ws/book">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/book" elementFormDefault="qualified">
+			<xs:complexType name="bookType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="author" type="xs:string"/>
+					<xs:element name="year" type="xs:integer"/>
+					<xs:element name="ISBN" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="orderBookType">
+				<xs:sequence>
+					<xs:element name="book" type="tns:bookType"/>
+					<xs:element name="quantity" type="xs:double"/>
+					<xs:element name="unitPrice" type="xs:double"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="orderBookListType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="orderBook" type="tns:orderBookType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="orderType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="orderNo" type="xs:string"/>
+					<xs:element name="orderDate" type="xs:date"/>
+					<xs:element name="dueDate" type="xs:date"/>
+					<xs:element name="customerName" type="xs:string"/>
+					<xs:element name="netAmount" type="xs:double"/>
+					<xs:element name="vatAmount" type="xs:double"/>
+					<xs:element name="orderBookList" type="tns:orderBookListType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getBookRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookResponse" type="tns:bookType"/>
+			<xs:element name="addBookRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="name" type="xs:string"/>
+						<xs:element name="author" type="xs:string"/>
+						<xs:element name="year" type="xs:integer"/>
+						<xs:element name="ISBN" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addBookResponse" type="tns:bookType"/>
+			<xs:element name="getBookListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="book" type="tns:bookType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderResponse" type="tns:orderType"/>
+			<xs:element name="addOrderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderNo" type="xs:string"/>
+						<xs:element name="orderDate" type="xs:date"/>
+						<xs:element name="dueDate" type="xs:date"/>
+						<xs:element name="customerName" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addOrderResponse" type="tns:orderType"/>
+			<xs:element name="getOrderListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="startDate" type="xs:date"/>
+						<xs:element name="endDate" type="xs:date"/>
+						<xs:element minOccurs="0" name="hasRelatedBooks">
+						  <xs:simpleType>
+							<xs:restriction base="xs:string">
+							  <xs:pattern value="jah|ei"/>
+							</xs:restriction>
+						  </xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="order" type="tns:orderType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderBookListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderBookListResponse" type="tns:orderBookListType"/>
+			<xs:element name="addOrderBookRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderId" type="xs:integer"/>
+						<xs:element name="bookId" type="xs:integer"/>
+						<xs:element name="quantity" type="xs:double"/>
+						<xs:element name="unitPrice" type="xs:double"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addOrderBookResponse" type="tns:orderBookType"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getBookMessageRequest">
+		<wsdl:part name="parameter" element="tns:getBookRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getBookMessageResponse">
+		<wsdl:part name="parameter" element="tns:getBookResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addBookMessageRequest">
+		<wsdl:part name="parameter" element="tns:addBookRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addBookMessageResponse">
+		<wsdl:part name="parameter" element="tns:addBookResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getBookListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getBookListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getBookListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getBookListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderMessageRequest">
+		<wsdl:part name="parameter" element="tns:addOrderRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderMessageResponse">
+		<wsdl:part name="parameter" element="tns:addOrderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderBookListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderBookListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderBookListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderBookListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderBookMessageRequest">
+		<wsdl:part name="parameter" element="tns:addOrderBookRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderBookMessageResponse">
+		<wsdl:part name="parameter" element="tns:addOrderBookResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="OrderPortType">
+		<wsdl:operation name="getBook">
+			<wsdl:input message="tns:getBookMessageRequest"/>
+			<wsdl:output message="tns:getBookMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addBook">
+			<wsdl:input message="tns:addBookMessageRequest"/>
+			<wsdl:output message="tns:addBookMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getBookList">
+			<wsdl:input message="tns:getBookListMessageRequest"/>
+			<wsdl:output message="tns:getBookListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getOrder">
+			<wsdl:input message="tns:getOrderMessageRequest"/>
+			<wsdl:output message="tns:getOrderMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addOrder">
+			<wsdl:input message="tns:addOrderMessageRequest"/>
+			<wsdl:output message="tns:addOrderMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getOrderList">
+			<wsdl:input message="tns:getOrderListMessageRequest"/>
+			<wsdl:output message="tns:getOrderListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getOrderBookList">
+			<wsdl:input message="tns:getOrderBookListMessageRequest"/>
+			<wsdl:output message="tns:getOrderBookListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addOrderBook">
+			<wsdl:input message="tns:addOrderBookMessageRequest"/>
+			<wsdl:output message="tns:addOrderBookMessageResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BookBinding" type="tns:OrderPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getBook">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addBook">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBookList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getOrder">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addOrder">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOrderList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getOrderBookList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addOrderBook">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BookService">
+		<wsdl:port name="BookPort" binding="tns:BookBinding">
+			<soap:address location="http://localhost:8080/BookWebApplication/BookService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
